@@ -117,8 +117,21 @@ export default function VaporwaveHero({ onEnter, control }: HeroStyleProps) {
               <RepelText words={INTRO_WORDS} />
             </motion.p>
 
+            {/* WIP flag - the site is still being built */}
+            <motion.p
+              custom={5}
+              variants={fade}
+              initial="hidden"
+              animate="show"
+              style={{ textShadow: TEXT_HALO }}
+              className="mt-4 flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.3em] text-[#2DE2E6]"
+            >
+              <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[#FF6AD5]" />
+              Work in progress
+            </motion.p>
+
             {/* magnetic enter CTA */}
-            <motion.div custom={5} variants={fade} initial="hidden" animate="show" className="mt-8">
+            <motion.div custom={6} variants={fade} initial="hidden" animate="show" className="mt-8">
               <MagneticButton onClick={onEnter}>Enter</MagneticButton>
             </motion.div>
           </div>

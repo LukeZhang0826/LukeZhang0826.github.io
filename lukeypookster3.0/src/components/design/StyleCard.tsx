@@ -36,7 +36,11 @@ type TagStyle = 'chip' | 'bracket' | 'slash' | 'underline';
 const YELLOW = '#F9D71C';
 const CARD_BOX =
   'style-card group relative h-[420px] w-[260px] shrink-0 cursor-pointer snap-start [perspective:1400px] md:h-[460px] md:w-[300px]';
-const FACE = 'absolute inset-0 overflow-hidden border-2 [backface-visibility:hidden]';
+// -webkit- prefix is REQUIRED: autoprefixer skips it (default browserslist), so without it
+// Safari/iOS < 15.4 ignore backface-visibility and the flipped front face shows through the
+// back, mirrored. Keep both the prefixed and unprefixed properties.
+const FACE =
+  'absolute inset-0 overflow-hidden border-2 [backface-visibility:hidden] [-webkit-backface-visibility:hidden]';
 
 /**
  * A single dictionary entry. Self-contained palette/font/motif, a per-card RANDOM
@@ -51,7 +55,7 @@ export default function StyleCard({ style, n }: { style: StyleCardData; n: numbe
   return (
     <div className={CARD_BOX} onClick={() => setFlipped((f) => !f)}>
       <div
-        className={`relative h-full w-full transition-transform duration-500 [transform-style:preserve-3d] ${
+        className={`relative h-full w-full transition-transform duration-500 [transform-style:preserve-3d] [-webkit-transform-style:preserve-3d] ${
           flipped ? '[transform:rotateY(180deg)]' : ''
         }`}
       >
