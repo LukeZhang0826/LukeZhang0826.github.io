@@ -1,0 +1,1 @@
+import{r as t}from"./motion-BxvpI9LN.js";function o(){const[n,i]=t.useState(()=>typeof document>"u"?!0:!document.hidden);return t.useEffect(()=>{const e=()=>i(!document.hidden);return document.addEventListener("visibilitychange",e),()=>document.removeEventListener("visibilitychange",e)},[]),n}export{o as u};

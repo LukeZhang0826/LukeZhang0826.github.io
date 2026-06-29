@@ -1,0 +1,483 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Self-hosted graffiti tag font for the vaporwave hero name (Fusterd, free for
+   commercial use). Brush is the primary cut; Bonus / BrushTwo are also in public/fonts/
+   - swap the url below to try them. */
+@font-face {
+  font-family: 'Fusterd';
+  src:
+    url('/fonts/Fusterd-Brush.woff2') format('woff2'),
+    url('/fonts/Fusterd-Brush.ttf') format('truetype');
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  * {
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    background: theme('colors.bone');
+    color: theme('colors.ink');
+    font-family: theme('fontFamily.grotesk');
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* hide the scrollbar everywhere - Lenis owns the scroll */
+  html {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+  }
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none; /* WebKit */
+    width: 0;
+    height: 0;
+  }
+
+  /* Lenis */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  /* text selection matches each section's world (default = hero/dev acid).
+     scoped via a `sel-*` class on the section root. */
+  ::selection {
+    background: theme('colors.acid');
+    color: theme('colors.ink');
+  }
+
+  /* custom cursor replaces the native arrow on fine pointers (touch keeps native) */
+  @media (pointer: fine) {
+    html.has-custom-cursor,
+    html.has-custom-cursor * {
+      cursor: none !important;
+    }
+  }
+  .sel-vapor ::selection {
+    background: #ff6ad5; /* 00 Hero - vaporwave pink */
+    color: #160a2b;
+  }
+  .sel-anim ::selection {
+    background: #9aa0a6; /* 02 Animation - noir film grey */
+    color: #0a0a0a;
+  }
+  .sel-swiss ::selection {
+    background: theme('colors.mond.red'); /* 03 Design - Swiss red */
+    color: theme('colors.bone');
+  }
+  .sel-mono ::selection {
+    background: theme('colors.ink'); /* 05 Music - pure B&W inversion */
+    color: theme('colors.bone');
+  }
+  .sel-room ::selection {
+    background: theme('colors.klein'); /* 06 Room - portal Klein blue */
+    color: theme('colors.bone');
+  }
+}
+
+@layer components {
+  /* Project card - accent driven by --accent / --accent-fg CSS vars (set inline
+     from the data) so Tailwind never has to generate dynamic classes. */
+  .project-card {
+    @apply relative flex min-h-[220px] flex-col justify-between border-2 p-6 transition-colors duration-300;
+    /* transparent so the Matrix rain shows through; fills with the accent on hover */
+    background: transparent;
+    color: theme('colors.bone');
+    border-color: theme('colors.bone');
+  }
+  .project-card:hover {
+    background: var(--accent);
+    color: var(--accent-fg);
+    border-color: var(--accent);
+  }
+  .project-tag {
+    background: var(--accent);
+    color: var(--accent-fg);
+  }
+  .project-card:hover .project-tag {
+    background: theme('colors.ink');
+    color: var(--accent);
+  }
+  .project-chip {
+    @apply border px-2 py-0.5 text-[10px] uppercase tracking-wider;
+    border-color: currentColor;
+  }
+
+  /* --- Design dictionary (Section 03) --- */
+  /* horizontal reference wall: hide the scrollbar (drag / arrows own the travel) */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* style card lifts slightly on hover */
+  .style-card {
+    transition: transform 0.25s ease;
+    user-select: none;
+  }
+  .style-card:hover {
+    transform: translateY(-6px);
+  }
+  /* grain motif (grunge / maximalism / punk cards) */
+  .style-noise {
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='dn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23dn)'/%3E%3C/svg%3E");
+  }
+}
+
+@layer utilities {
+  /* brutalist text outline */
+  .text-stroke {
+    -webkit-text-stroke: 2px theme('colors.ink');
+    color: transparent;
+  }
+  .text-stroke-bone {
+    -webkit-text-stroke: 3.5px theme('colors.bone');
+    color: transparent;
+  }
+  /* paper grain noise overlay */
+  .grain::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* hero name: RGB-split glitch on hover; the outlined word fills in */
+  .hero-name:hover {
+    animation: hero-glitch 0.4s steps(2, end) 1;
+  }
+  .hero-name.text-stroke-bone:hover {
+    -webkit-text-stroke-width: 0;
+    color: #fdeff9;
+  }
+}
+
+@keyframes hero-glitch {
+  0%,
+  100% {
+    text-shadow: none;
+  }
+  20% {
+    text-shadow: 3px 0 #ff6ad5, -3px 0 #2de2e6;
+  }
+  45% {
+    text-shadow: -3px 0 #ff6ad5, 3px 0 #2de2e6;
+  }
+  70% {
+    text-shadow: 2px 0 #ff6ad5, -2px 0 #2de2e6;
+  }
+}
+
+/* ---- Vaporwave hero ---- */
+.vapor-chrome {
+  color: #fdeff9;
+  text-shadow: 0 0 22px rgba(255, 106, 213, 0.5), 2px 2px 0 rgba(45, 226, 230, 0.6);
+}
+/* neon-sign glow for the hero name - tinted (not white) core + layered colored halo,
+   like lit glass tubing. One color per word (pink / cyan) for the vaporwave two-tone. */
+.neon-pink {
+  color: #ffe3f6;
+  text-shadow:
+    0 0 7px #ff6ad5,
+    0 0 20px #ff49c7,
+    0 0 44px rgba(255, 73, 199, 0.75);
+}
+.neon-cyan {
+  color: #dcfbfc;
+  text-shadow:
+    0 0 7px #2de2e6,
+    0 0 20px #2de2e6,
+    0 0 44px rgba(45, 226, 230, 0.75);
+}
+/* discipline words: bold off-white with a subtle pink/cyan chrome offset (matches the
+   name treatment, so they read cohesive instead of like rainbow highlighter) */
+.vapor-word {
+  font-weight: 700;
+  color: #fdeff9;
+  text-shadow: 1.5px 1.5px 0 rgba(255, 106, 213, 0.8), -1.5px -1.5px 0 rgba(45, 226, 230, 0.7);
+}
+/* the classic outrun perspective grid */
+.vapor-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 73, 199, 0.85) 1.5px, transparent 1.5px),
+    linear-gradient(to bottom, rgba(255, 73, 199, 0.85) 1.5px, transparent 1.5px);
+  background-size: 64px 64px;
+  /* perspective in the transform + anchor at the bottom edge so the plane lies on the
+     GROUND and recedes up to the horizon. A shallower angle keeps the cells big/visible. */
+  transform: perspective(300px) rotateX(58deg);
+  transform-origin: center bottom;
+  animation: vapor-grid 2s linear infinite;
+}
+@keyframes vapor-grid {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 64px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vapor-grid {
+    animation: none;
+  }
+}
+
+/* ---- graffiti spray-paint reveal (vaporwave hero name) ----
+   a feathered mask sweeps the letters on left-to-right (the spray-can pass) while a
+   blur clears, so the word reads as if it's being sprayed onto the wall. */
+@keyframes spray-sweep {
+  from {
+    -webkit-mask-position: 140% 0;
+    mask-position: 140% 0;
+  }
+  to {
+    -webkit-mask-position: -40% 0;
+    mask-position: -40% 0;
+  }
+}
+@keyframes spray-settle {
+  0% {
+    opacity: 0;
+    filter: blur(12px);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+.spray-name {
+  -webkit-mask-image: linear-gradient(100deg, transparent 0 12%, #000 26% 100%);
+  mask-image: linear-gradient(100deg, transparent 0 12%, #000 26% 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 240% 100%;
+  mask-size: 240% 100%;
+  animation:
+    spray-sweep 0.9s cubic-bezier(0.22, 1, 0.36, 1) both,
+    spray-settle 0.9s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .spray-name {
+    -webkit-mask-image: none;
+    mask-image: none;
+    animation: none;
+  }
+}
+
+/* HUD intro: opacity-only (NO transform) so it never isolates the mix-blend-difference */
+@keyframes hud-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [style*='hud-in'] {
+    animation: none !important;
+  }
+}
+
+/* 02 Animation: old-school noir film grain over the completed-works reel. Oversized + jittered
+   in steps so it flickers like dirty projected film (multiply darkens the white ground to grey). */
+.noir-grain {
+  position: absolute;
+  inset: -8%;
+  width: 116%;
+  height: 116%;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.4;
+  /* small turbulence tile, repeated, so it rasterizes once cheaply (was a full 200%-viewport
+     raster + multiply that thrashed on zoom) */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='nf'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23nf)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  background-repeat: repeat;
+  animation: noir-grain 0.55s steps(4) infinite;
+}
+@keyframes noir-grain {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-3%, 2%);
+  }
+  50% {
+    transform: translate(2%, -3%);
+  }
+  75% {
+    transform: translate(-2%, -2%);
+  }
+  100% {
+    transform: translate(3%, 2%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .noir-grain {
+    animation: none !important;
+  }
+}
+
+/* 02 Animation: projector dust/speckle - tiled thresholded-noise layers that flicker out of
+   phase so the dirt keeps changing frame-to-frame. */
+.film-dust {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+  background-size: 600px 340px;
+  opacity: 0.5;
+  animation: film-dust-flicker 0.26s steps(1) infinite;
+}
+.film-dust--coarse {
+  opacity: 0.6;
+}
+@keyframes film-dust-flicker {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .film-dust {
+    animation: none !important;
+  }
+}
+
+/* 02 Animation: hand-drawn doodles that draw themselves on a loop (stroke-dashoffset).
+   paths use pathLength=1 so dasharray:1 works regardless of real length. */
+@keyframes doodle-draw {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  42% {
+    stroke-dashoffset: 0;
+  }
+  72% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  92% {
+    stroke-dashoffset: -1;
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: -1;
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .doodle path {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+    opacity: 0.5 !important;
+  }
+}
+
+/* grease-pencil scene: gentle idle float on layered elements (02 Animation) */
+@keyframes gp-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes gp-bob-slow {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-18px) rotate(1.5deg);
+  }
+}
+.gp-bob {
+  animation: gp-bob 6s ease-in-out infinite;
+}
+.gp-bob-slow {
+  animation: gp-bob-slow 9s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gp-bob,
+  .gp-bob-slow {
+    animation: none;
+  }
+}
+
+/* dice control: scale up and down to signal it's clickable */
+@keyframes dice-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+}
+.dice-pulse {
+  animation: dice-pulse 1.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dice-pulse {
+    animation: none;
+  }
+}
+
+/* expanding "shine" pulse ring (Play button) */
+@keyframes play-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* a glint sweeping fully across the Play button, then a pause off-screen */
+@keyframes play-shine {
+  0% {
+    transform: translateX(-260%) skewX(-18deg);
+  }
+  36%,
+  100% {
+    transform: translateX(360%) skewX(-18deg);
+  }
+}

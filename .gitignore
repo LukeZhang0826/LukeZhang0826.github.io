@@ -1,0 +1,38 @@
+# dependencies
+node_modules/
+**/node_modules/
+
+# build outputs (docs/ is the published site and is NOT ignored)
+**/dist/
+**/.next/
+**/out/
+*.tsbuildinfo
+
+# env / local
+.env
+.env.*
+*.local
+
+# editor / os
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# the abandoned 4th attempt - reference only, kept out of the repo
+failed version/
+
+# huge raw working assets (mp4/mov/psd/hdr, 20-300MB) - exceed GitHub's 100MB limit, not site files
+Archive/Portfolio Unused Assets/
+Archive/portfolioWebsiteZip.zip
+
+# webpack/next build caches that leaked into public
+**/cache/webpack/
+
+# redundant zip-extracted duplicate of the v1 site (Archive root is the kept copy)
+Archive/portfolioWebsiteZip/

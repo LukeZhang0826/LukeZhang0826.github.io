@@ -1,0 +1,43 @@
+.info-mask{
+    mask-image: url('/img/mask.svg');
+    mask-repeat: no-repeat;
+}
+
+.transition-anchor {
+    transition: color 0.3s ease; // Smooth color transition
+}
+
+.code-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    white-space: pre;
+    // courier sans
+    font-family: 'Courier New', Courier, monospace;
+}
+
+@keyframes typing {
+    0%, 100% {
+      width: 0;
+    }
+    50% {
+      width: 100%;
+    }
+  }
+
+.code-title-typing {
+  border-right: 2px solid;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 8s steps(80, end) infinite, blink 0.75s step-end infinite;
+}
+  
+@keyframes blink {
+    from,
+    to {
+      border-color: transparent;
+    }
+    50% {
+      border-color: black;
+    }
+  }

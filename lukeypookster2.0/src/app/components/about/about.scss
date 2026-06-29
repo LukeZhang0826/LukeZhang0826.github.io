@@ -1,0 +1,16 @@
+.gradient-text {
+    background-image: linear-gradient(to right, #DBFF00, #24FF00, #0077FB, #5200FF);
+    color: transparent; /* Make the text color transparent so only the background is visible */
+    -webkit-background-clip: text; /* Clip the background to the text content */
+    background-clip: text;
+    display: inline; /* Ensure it doesn't behave like a block */
+}
+
+.profession-text {
+    color: white;
+}
+
+.about-mask{
+    mask-image: url('/img/mask.svg');
+    mask-repeat: no-repeat;
+}

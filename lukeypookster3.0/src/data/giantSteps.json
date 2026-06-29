@@ -1,0 +1,79 @@
+{
+  "title": "Giant Steps",
+  "_comment": "SONG MAP. 'sections' play in order, each repeated 'repeat' times, so the timeline is modular: one block for the form (head + solos), one for the ending. 'chord' is a symbol (Bmaj7 / Bb7 / Am7 / C#m7); 'beats' is how long it's held. bpm + headOffsetMs sync to the recording (raise headOffsetMs if it starts late, nudge bpm if it drifts). loop=false makes the readout hold on the final chord once the song ends instead of cycling. To match a new song: set repeat to (song length in sec) / (form beats * 60 / bpm), then adjust the ending block to land on the real last chord.",
+  "headOffsetMs": 0,
+  "loop": false,
+  "sections": [
+    {
+      "_label": "form - head + solos, repeated",
+      "repeat": 20,
+      "at": [0.0, 13.5, 27.0, 40.3, 53.6, 66.9, 79.8, 93.5, 106.8, 120.1, 133.4, 146.7, 160.0, 173.3, 186.0, 199.0, 211.7, 224.4, 237.1, 250.2],
+      "changes": [
+        { "chord": "Bmaj7", "beats": 2 },
+        { "chord": "D7", "beats": 2 },
+        { "chord": "Gmaj7", "beats": 2 },
+        { "chord": "Bb7", "beats": 2 },
+        { "chord": "Ebmaj7", "beats": 4 },
+        { "chord": "Am7", "beats": 2 },
+        { "chord": "D7", "beats": 2 },
+        { "chord": "Gmaj7", "beats": 2 },
+        { "chord": "Bb7", "beats": 2 },
+        { "chord": "Ebmaj7", "beats": 2 },
+        { "chord": "F#7", "beats": 2 },
+        { "chord": "Bmaj7", "beats": 4 },
+        { "chord": "Fm7", "beats": 2 },
+        { "chord": "Bb7", "beats": 2 },
+        { "chord": "Ebmaj7", "beats": 4 },
+        { "chord": "Am7", "beats": 2 },
+        { "chord": "D7", "beats": 2 },
+        { "chord": "Gmaj7", "beats": 4 },
+        { "chord": "C#m7", "beats": 2 },
+        { "chord": "F#7", "beats": 2 },
+        { "chord": "Bmaj7", "beats": 4 },
+        { "chord": "Fm7", "beats": 2 },
+        { "chord": "Bb7", "beats": 2 },
+        { "chord": "Ebmaj7", "beats": 4 },
+        { "chord": "C#m7", "beats": 2 },
+        { "chord": "F#7", "beats": 2 }
+      ]
+    },
+    {
+      "_label": "ending - lands before Ebmaj7",
+      "repeat": 1,
+      "at": [263.7],
+      "changes": [
+        { "chord": "Bmaj7", "beats": 2 },
+        { "chord": "D7", "beats": 2 },
+        { "chord": "Gmaj7", "beats": 2 },
+        { "chord": "Bb7", "beats": 2 },
+        { "chord": "Ebmaj7", "beats": 4 },
+        { "chord": "Am7", "beats": 2 },
+        { "chord": "D7", "beats": 2 },
+        { "chord": "Gmaj7", "beats": 2 },
+        { "chord": "Bb7", "beats": 2 },
+        { "chord": "Ebmaj7", "beats": 2 },
+        { "chord": "F#7", "beats": 2 },
+        { "chord": "Bmaj7", "beats": 4 },
+        { "chord": "Fm7", "beats": 2 },
+        { "chord": "Bb7", "beats": 2 },
+        { "chord": "Ebmaj7", "beats": 4 },
+        { "chord": "Am7", "beats": 2 },
+        { "chord": "D7", "beats": 2 },
+        { "chord": "Gmaj7", "beats": 4 },
+        { "chord": "C#m7", "beats": 2 },
+        { "chord": "F#7", "beats": 2 },
+        { "chord": "Bmaj7", "beats": 4 },
+        { "chord": "Fm7", "beats": 2 },
+        { "chord": "Bb7", "beats": 2 }
+      ]
+    },
+    {
+      "_label": "Ebmaj7",
+      "repeat": 1,
+      "at": [275.0, 282.0],
+      "changes": [
+        { "chord": "Ebmaj7", "beats": 4 }
+      ]
+    }
+  ]
+}

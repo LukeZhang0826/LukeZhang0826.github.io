@@ -1,0 +1,1 @@
+import{j as n,m as a}from"./motion-BxvpI9LN.js";function p({children:i,y:t=22,delay:o=0,className:e}){return n.jsx(a.div,{className:e,initial:{opacity:0,y:t},whileInView:{opacity:1,y:0},viewport:{once:!0,margin:"0px 0px -12% 0px"},transition:{duration:.6,ease:[.16,1,.3,1],delay:o},children:i})}export{p as R};

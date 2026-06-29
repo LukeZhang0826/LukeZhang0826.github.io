@@ -1,0 +1,17 @@
+.gradient-div {
+    background-image: 
+        linear-gradient(#5200FF, #0075FF, #24FF00, #DBFF00);
+}
+
+.icon {
+    transition: fill 0.3s ease, filter 0.3s ease;
+}
+
+.icon-logo .gradient {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.icon-logo.gradient-active .gradient {
+    opacity: 1;
+}

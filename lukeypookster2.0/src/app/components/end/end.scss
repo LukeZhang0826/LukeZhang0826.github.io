@@ -1,0 +1,125 @@
+.end-mask{
+  mask-image: url('/img/mask.svg');
+  mask-repeat: no-repeat;
+}
+
+
+.text-3d-large-container {
+  position: relative;
+  transform-style: preserve-3d; /* Adjust as needed. This should be the height of one of your p tags. */
+  perspective: 100000px;
+  height: 32px;
+  transition: transform 0.2s;
+  margin-top: 16px;
+  cursor: pointer;
+}
+
+.text-3d-large-container p {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 32px;
+  display: flex;
+  backface-visibility: hidden;
+  transition: all 0.2s;
+  margin: 0;
+}
+
+.text-3d-large-primary {
+  transform: rotateX(0deg);
+}
+
+.text-3d-large-secondary {
+  transform: rotateX(90deg);
+}
+
+.text-3d-large-container:hover .text-3d-large-primary {
+  transform: rotateX(-90deg);
+}
+
+.text-3d-large-container:hover .text-3d-large-secondary {
+  transform: rotateX(0deg);
+}
+
+
+
+
+.text-3d-small-container {
+  position: relative;
+  transform-style: preserve-3d; /* Adjust as needed. This should be the height of one of your p tags. */
+  perspective: 100000px;
+  height: 12px;
+  transition: transform 0.2s;
+  margin-top: 8px;
+  cursor: default;
+}
+
+.text-3d-small-container p {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 12px;
+  display: flex;
+  backface-visibility: hidden;
+  transition: all 0.2s;
+  margin: 0;
+}
+
+.text-3d-small-primary {
+  transform: rotateX(0deg);
+}
+
+.text-3d-small-secondary {
+  transform: rotateX(90deg);
+}
+
+.text-3d-small-container:hover .text-3d-small-primary {
+  transform: rotateX(-90deg);
+}
+
+.text-3d-small-container:hover .text-3d-small-secondary {
+  transform: rotateX(0deg);
+}
+
+
+
+
+.text-3d-title-container {
+  position: relative;
+  transform-style: preserve-3d; /* Adjust as needed. This should be the height of one of your p tags. */
+  perspective: 100000px;
+  height: 12px;
+  transition: transform 0.2s;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.text-3d-title-container h1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 12px;
+  display: flex;
+  backface-visibility: hidden;
+  transition: all 0.2s;
+  margin: 0;
+}
+
+.text-3d-title-primary {
+  transform: rotateX(0deg);
+}
+
+.text-3d-title-secondary {
+  transform: rotateX(90deg);
+}
+
+.text-3d-title-container:hover .text-3d-title-primary {
+  transform: rotateX(-90deg);
+}
+
+.text-3d-title-container:hover .text-3d-title-secondary {
+  transform: rotateX(0deg);
+}
