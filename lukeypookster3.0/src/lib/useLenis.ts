@@ -8,6 +8,10 @@ import Lenis from 'lenis';
  */
 
 let instance: Lenis | null = null;
+// lockScroll can be called before the Lenis instance exists (e.g. the loading screen's
+// effect runs before App's useLenis effect - child effects fire first); remember the
+// wish and honor it at creation.
+let wantLocked = false;
 
 export function useLenis() {
   useEffect(() => {
@@ -24,6 +28,7 @@ export function useLenis() {
       touchMultiplier: 1.5,
     });
     instance = lenis;
+    if (wantLocked) lenis.stop();
 
     let raf = 0;
     const loop = (time: number) => {
@@ -42,11 +47,13 @@ export function useLenis() {
 
 /** Freeze background scroll (e.g. while a modal/case study is open). */
 export function lockScroll() {
+  wantLocked = true;
   instance?.stop();
 }
 
 /** Resume background scroll. */
 export function unlockScroll() {
+  wantLocked = false;
   instance?.start();
 }
 

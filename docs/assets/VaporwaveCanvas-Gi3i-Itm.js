@@ -1,4 +1,4 @@
-import{r,j as e}from"./motion-BxvpI9LN.js";import{a as u,u as i,A as h}from"./three-CNwzlWg8.js";import{u as m}from"./usePageVisible-C8NG6ISJ.js";const c=`
+import{r,j as e}from"./motion-BxvpI9LN.js";import{C as p,u as i,A as g}from"./three-MouWZUKs.js";import{u as x}from"./usePageVisible-C8NG6ISJ.js";import{b as y}from"./index-BDXTM9st.js";const c=`
   float hash21(vec2 p) {
     p = fract(p * vec2(123.34, 456.21));
     p += dot(p, p + 45.32);
@@ -43,7 +43,7 @@ import{r,j as e}from"./motion-BxvpI9LN.js";import{a as u,u as i,A as h}from"./th
     float twinkle = 0.5 + 0.5 * sin(t * 2.5 + r * 50.0);
     return glow * twinkle;
   }
-`,f=`
+`,v=`
   varying vec2 vUv;
   varying float vDepth;
   void main() {
@@ -52,7 +52,7 @@ import{r,j as e}from"./motion-BxvpI9LN.js";import{a as u,u as i,A as h}from"./th
     vDepth = -mv.z;
     gl_Position = projectionMatrix * mv;
   }
-`,p=`
+`,b=`
   varying vec2 vUv;
   varying float vDepth;
   uniform float uTime;
@@ -67,7 +67,7 @@ import{r,j as e}from"./motion-BxvpI9LN.js";import{a as u,u as i,A as h}from"./th
     if (a < 0.02) discard;
     gl_FragColor = vec4(vec3(1.0, 0.30, 0.82) * a, a); // pink
   }
-`;function g(){const t=r.useRef(null),a=r.useMemo(()=>({uTime:{value:0}}),[]);return i((s,o)=>{t.current&&(t.current.uniforms.uTime.value+=o)}),e.jsxs("mesh",{"rotation-x":-Math.PI/2,position:[0,0,-70],renderOrder:2,children:[e.jsx("planeGeometry",{args:[400,320]}),e.jsx("shaderMaterial",{ref:t,vertexShader:f,fragmentShader:p,uniforms:a,transparent:!0,blending:h,depthWrite:!1})]})}const x=`
+`;function w(){const t=r.useRef(null),a=r.useMemo(()=>({uTime:{value:0}}),[]);return i((s,o)=>{t.current&&(t.current.uniforms.uTime.value+=o)}),e.jsxs("mesh",{"rotation-x":-Math.PI/2,position:[0,0,-70],renderOrder:2,children:[e.jsx("planeGeometry",{args:[400,320]}),e.jsx("shaderMaterial",{ref:t,vertexShader:v,fragmentShader:b,uniforms:a,transparent:!0,blending:g,depthWrite:!1})]})}const T=`
   varying vec2 vUv;
   varying float vDepth;
   uniform float uTime;
@@ -84,7 +84,7 @@ import{r,j as e}from"./motion-BxvpI9LN.js";import{a as u,u as i,A as h}from"./th
     col *= fade * 0.5; // dim + concentrate near the horizon (more faded than the real sky)
     gl_FragColor = vec4(col, 1.0);
   }
-`;function y(){const t=r.useRef(null),a=r.useMemo(()=>({uTime:{value:0}}),[]);return i((s,o)=>{t.current&&(t.current.uniforms.uTime.value+=o)}),e.jsxs("mesh",{"rotation-x":-Math.PI/2,position:[0,0,-70],renderOrder:1,children:[e.jsx("planeGeometry",{args:[400,320]}),e.jsx("shaderMaterial",{ref:t,vertexShader:f,fragmentShader:x,uniforms:a,transparent:!0,depthWrite:!1})]})}const l=`
+`;function j(){const t=r.useRef(null),a=r.useMemo(()=>({uTime:{value:0}}),[]);return i((s,o)=>{t.current&&(t.current.uniforms.uTime.value+=o)}),e.jsxs("mesh",{"rotation-x":-Math.PI/2,position:[0,0,-70],renderOrder:1,children:[e.jsx("planeGeometry",{args:[400,320]}),e.jsx("shaderMaterial",{ref:t,vertexShader:v,fragmentShader:T,uniforms:a,transparent:!0,depthWrite:!1})]})}const k=`
   varying vec2 vUv;
   varying float vWorldY;
   void main() {
@@ -93,41 +93,7 @@ import{r,j as e}from"./motion-BxvpI9LN.js";import{a as u,u as i,A as h}from"./th
     vWorldY = wp.y;
     gl_Position = projectionMatrix * viewMatrix * wp;
   }
-`,b=`
-  varying vec2 vUv;
-  varying float vWorldY;
-  void main() {
-    if (vWorldY < 0.0) discard; // never draw below the horizon
-    vec2 p = vUv - 0.5;
-    if (length(p) > 0.5) discard;
-    vec3 top = vec3(1.0, 0.93, 0.62);
-    vec3 bot = vec3(1.0, 0.36, 0.64);
-    vec3 col = mix(bot, top, vUv.y) * 1.08;
-    if (vUv.y < 0.5) {
-      float s = step(0.42, fract((0.5 - vUv.y) * 20.0));
-      if (s < 0.5) discard;
-    }
-    gl_FragColor = vec4(col, 1.0);
-  }
-`;function w(){return e.jsxs("mesh",{position:[0,28,-225],children:[e.jsx("planeGeometry",{args:[88,88]}),e.jsx("shaderMaterial",{vertexShader:l,fragmentShader:b,transparent:!0,depthWrite:!1,fog:!1})]})}const j=`
-  varying vec2 vUv;
-  varying float vWorldY;
-  void main() {
-    if (vWorldY > 0.0) discard;            // only draw below the horizon (the reflection)
-    vec2 p = vUv - 0.5;
-    if (length(p) > 0.5) discard;          // mirror of the sun disc
-    float fy = 1.0 - vUv.y;                 // flip vertically so it mirrors the sun
-    vec3 top = vec3(1.0, 0.93, 0.62);
-    vec3 bot = vec3(1.0, 0.36, 0.64);
-    vec3 col = mix(bot, top, fy) * 1.08;
-    if (fy < 0.5) {                         // same horizontal slits as the sun's lower half
-      float s = step(0.42, fract((0.5 - fy) * 20.0));
-      if (s < 0.5) discard;
-    }
-    float f = smoothstep(-72.0, 0.0, vWorldY); // strongest at the horizon, fades downward
-    gl_FragColor = vec4(col, f * 0.55);        // semi-transparent, faded reflection
-  }
-`;function U(){return e.jsxs("mesh",{position:[0,-28,-225],renderOrder:3,children:[e.jsx("planeGeometry",{args:[88,88]}),e.jsx("shaderMaterial",{vertexShader:l,fragmentShader:j,transparent:!0,depthWrite:!1,fog:!1})]})}const R=`
+`,R=`
   varying vec2 vUv;
   varying float vWorldY;
   uniform float uTime;
@@ -155,4 +121,4 @@ import{r,j as e}from"./motion-BxvpI9LN.js";import{a as u,u as i,A as h}from"./th
     col += vec3(1.0, 0.30, 0.70) * smoothstep(2.5, 0.0, h) * 0.8; // glowing horizon line
     gl_FragColor = vec4(col, 1.0);
   }
-`;function T(){const t=r.useRef(null),a=r.useMemo(()=>({uTime:{value:0}}),[]);return i((s,o)=>{t.current&&(t.current.uniforms.uTime.value+=o)}),e.jsxs("mesh",{position:[0,40,-230],children:[e.jsx("planeGeometry",{args:[800,460]}),e.jsx("shaderMaterial",{ref:t,vertexShader:l,fragmentShader:R,uniforms:a,depthWrite:!1,fog:!1})]})}function F(){const t=r.useRef(null),[a,s]=r.useState(!0),o=m();return r.useEffect(()=>{const n=t.current;if(!n)return;const v=new IntersectionObserver(([d])=>s(d.isIntersecting),{threshold:0});return v.observe(n),()=>v.disconnect()},[]),e.jsxs("div",{ref:t,className:"absolute inset-0",children:[e.jsxs(u,{frameloop:a&&o?"always":"never",dpr:[1,1.5],gl:{antialias:!0},camera:{position:[0,6,22],fov:55,near:.1,far:500},onCreated:({camera:n})=>n.lookAt(0,3,-80),children:[e.jsx("color",{attach:"background",args:["#050109"]}),e.jsx(T,{}),e.jsx(w,{}),e.jsx(y,{}),e.jsx(g,{}),e.jsx(U,{})]}),e.jsx("div",{"aria-hidden":!0,className:"pointer-events-none absolute inset-0",style:{backgroundImage:"radial-gradient(rgba(5,1,9,0.7) 1px, transparent 1.5px)",backgroundSize:"5px 5px",mixBlendMode:"multiply",opacity:.5}}),e.jsx("div",{"aria-hidden":!0,className:"pointer-events-none absolute inset-0 opacity-[0.16]",style:{mixBlendMode:"overlay",backgroundImage:`url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`}})]})}export{F as default};
+`;function C(){const t=r.useRef(null),a=r.useMemo(()=>({uTime:{value:0}}),[]);return i((s,o)=>{t.current&&(t.current.uniforms.uTime.value+=o)}),e.jsxs("mesh",{position:[0,40,-230],children:[e.jsx("planeGeometry",{args:[800,460]}),e.jsx("shaderMaterial",{ref:t,vertexShader:k,fragmentShader:R,uniforms:a,depthWrite:!1,fog:!1})]})}function _(){const t=r.useRef(null),[a,s]=r.useState(!0),o=x(),f=y(),[u,m]=r.useState(!0);r.useEffect(()=>{const n=setTimeout(()=>m(!1),700);return()=>clearTimeout(n)},[]),r.useEffect(()=>{const n=t.current;if(!n)return;const l=new IntersectionObserver(([h])=>s(h.isIntersecting),{threshold:0});return l.observe(n),()=>l.disconnect()},[]);const d=a&&o&&(f||u);return e.jsxs("div",{ref:t,className:"absolute inset-0",children:[e.jsxs(p,{frameloop:d?"always":"never",dpr:[1,1.5],gl:{antialias:!0},camera:{position:[0,6,22],fov:55,near:.1,far:500},onCreated:({camera:n})=>n.lookAt(0,3,-80),children:[e.jsx("color",{attach:"background",args:["#050109"]}),e.jsx(C,{}),e.jsx(j,{}),e.jsx(w,{})]}),e.jsx("div",{"aria-hidden":!0,className:"pointer-events-none absolute inset-0",style:{backgroundImage:"radial-gradient(rgba(5,1,9,0.7) 1px, transparent 1.5px)",backgroundSize:"5px 5px",mixBlendMode:"multiply",opacity:.5}}),e.jsx("div",{"aria-hidden":!0,className:"pointer-events-none absolute inset-0 opacity-[0.16]",style:{mixBlendMode:"overlay",backgroundImage:`url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`}})]})}export{_ as default};

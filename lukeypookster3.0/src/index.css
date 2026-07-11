@@ -246,6 +246,24 @@
   }
 }
 
+/* hero poster: idle float for the gradient orbs + bust. CSS (compositor-driven) on
+   purpose - these used to be 7 infinite framer loops, which cost per-frame JS forever
+   and visibly janked during window resize. --float sets each element's drift depth. */
+@keyframes poster-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(var(--float, -10px));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .poster-float {
+    animation: none !important;
+  }
+}
+
 /* ---- graffiti spray-paint reveal (vaporwave hero name) ----
    a feathered mask sweeps the letters on left-to-right (the spray-can pass) while a
    blur clears, so the word reads as if it's being sprayed onto the wall. */

@@ -2,12 +2,13 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { usePageVisible } from '../../lib/usePageVisible';
+import { useHeroEntered } from '../../lib/heroGate';
 
 /**
  * Section 00 backdrop: a WebGL vaporwave / outrun scene - an infinite magenta grid road
- * scrolling toward you, a slitted retro sun on the horizon, wireframe terrain flanking
- * the road, and a gradient sky, all blended into purple fog. Lazy-loaded so three.js
- * stays out of the hero's critical path.
+ * scrolling toward you under a starry nebula sky. (The slitted retro sun + its floor
+ * reflection were CUT 2026-07-05: the statue poster is the centerpiece now and the sun
+ * fought it.) Lazy-loaded so three.js stays out of the hero's critical path.
  *
  * Most of the look lives in a few constants up top - easy to tune the framing.
  */
@@ -153,7 +154,8 @@ function FloorReflection() {
   );
 }
 
-/* ---- retro sun (clipped at the horizon plane y=0 so none shows below it) ---- */
+/* ---- world-space vertex shader: passes world Y so the fragment can clip hard at the
+   horizon plane (y=0). Kept from the removed retro sun - the sky still uses it. ---- */
 const SUN_VERT = /* glsl */ `
   varying vec2 vUv;
   varying float vWorldY;
@@ -164,68 +166,6 @@ const SUN_VERT = /* glsl */ `
     gl_Position = projectionMatrix * viewMatrix * wp;
   }
 `;
-const SUN_FRAG = /* glsl */ `
-  varying vec2 vUv;
-  varying float vWorldY;
-  void main() {
-    if (vWorldY < 0.0) discard; // never draw below the horizon
-    vec2 p = vUv - 0.5;
-    if (length(p) > 0.5) discard;
-    vec3 top = vec3(1.0, 0.93, 0.62);
-    vec3 bot = vec3(1.0, 0.36, 0.64);
-    vec3 col = mix(bot, top, vUv.y) * 1.08;
-    if (vUv.y < 0.5) {
-      float s = step(0.42, fract((0.5 - vUv.y) * 20.0));
-      if (s < 0.5) discard;
-    }
-    gl_FragColor = vec4(col, 1.0);
-  }
-`;
-
-function Sun() {
-  // just in front of the sky's horizon line (z -230). Center at y=28 so the lower part of
-  // the 44-radius disc falls below world y=0 and is clipped by the shader - the classic
-  // outrun "setting sun" partially behind the horizon.
-  return (
-    <mesh position={[0, 28, -225]}>
-      <planeGeometry args={[88, 88]} />
-      <shaderMaterial vertexShader={SUN_VERT} fragmentShader={SUN_FRAG} transparent depthWrite={false} fog={false} />
-    </mesh>
-  );
-}
-
-/* ---- sun reflection: a vertically-mirrored, faded copy of the sun cast onto the floor,
-   starting at the horizon line and fading downward (the floor "reflects" the sun). ---- */
-const REFLECT_FRAG = /* glsl */ `
-  varying vec2 vUv;
-  varying float vWorldY;
-  void main() {
-    if (vWorldY > 0.0) discard;            // only draw below the horizon (the reflection)
-    vec2 p = vUv - 0.5;
-    if (length(p) > 0.5) discard;          // mirror of the sun disc
-    float fy = 1.0 - vUv.y;                 // flip vertically so it mirrors the sun
-    vec3 top = vec3(1.0, 0.93, 0.62);
-    vec3 bot = vec3(1.0, 0.36, 0.64);
-    vec3 col = mix(bot, top, fy) * 1.08;
-    if (fy < 0.5) {                         // same horizontal slits as the sun's lower half
-      float s = step(0.42, fract((0.5 - fy) * 20.0));
-      if (s < 0.5) discard;
-    }
-    float f = smoothstep(-72.0, 0.0, vWorldY); // strongest at the horizon, fades downward
-    gl_FragColor = vec4(col, f * 0.55);        // semi-transparent, faded reflection
-  }
-`;
-
-function SunReflection() {
-  // mirror of the sun across the horizon: same disc/z as the sun but centered at y=-28.
-  // renderOrder 3 draws it OVER the floor grid + reflection so it reads as a reflection.
-  return (
-    <mesh position={[0, -28, -225]} renderOrder={3}>
-      <planeGeometry args={[88, 88]} />
-      <shaderMaterial vertexShader={SUN_VERT} fragmentShader={REFLECT_FRAG} transparent depthWrite={false} fog={false} />
-    </mesh>
-  );
-}
 
 /* ---- darker-purple sky with a HARD horizon (clipped at world y=0) ----
    plus a procedural starfield, drifting nebula haze, and a neon mountain ridge so the
@@ -287,6 +227,14 @@ export default function VaporwaveCanvas() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(true);
   const visible = usePageVisible(); // also pause when the tab is backgrounded
+  const entered = useHeroEntered(); // false while the loading curtain is still down
+  // while the loader is up the canvas is hidden behind it: render just long enough to warm
+  // up + upload shaders, then park the frameloop until the visitor actually enters
+  const [warm, setWarm] = useState(true);
+  useEffect(() => {
+    const t = setTimeout(() => setWarm(false), 700);
+    return () => clearTimeout(t);
+  }, []);
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -295,10 +243,12 @@ export default function VaporwaveCanvas() {
     return () => io.disconnect();
   }, []);
 
+  const running = active && visible && (entered || warm);
+
   return (
     <div ref={containerRef} className="absolute inset-0">
       <Canvas
-        frameloop={active && visible ? 'always' : 'never'}
+        frameloop={running ? 'always' : 'never'}
         dpr={[1, 1.5]} /* cap retina DPR: per-pixel fbm cost scales with dpr^2 (~26% lighter than 1.75) */
         gl={{ antialias: true }}
         camera={{ position: [0, 6, 22], fov: 55, near: 0.1, far: 500 }}
@@ -306,10 +256,8 @@ export default function VaporwaveCanvas() {
       >
         <color attach="background" args={['#050109']} />
         <Sky />
-        <Sun />
         <FloorReflection />
         <Grid />
-        <SunReflection />
       </Canvas>
 
       {/* halftone print texture over the scene */}

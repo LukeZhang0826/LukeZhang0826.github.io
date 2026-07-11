@@ -47,10 +47,16 @@ export default {
           '0%, 49%': { opacity: '1' },
           '50%, 100%': { opacity: '0' },
         },
+        // loading-screen dino mark: an occasional eye blink (no bob - it stays still)
+        'dino-blink': {
+          '0%, 88%, 96%, 100%': { transform: 'scaleY(1)' },
+          '91%, 93%': { transform: 'scaleY(0.08)' },
+        },
       },
       animation: {
         marquee: 'marquee 22s linear infinite',
         blink: 'blink 1.1s steps(1) infinite',
+        'dino-blink': 'dino-blink 2.6s linear infinite',
       },
     },
   },

@@ -248,6 +248,21 @@ function FilmReel({
   started?: boolean;
   onStart?: () => void;
 }) {
+  // pad the strip with blank film tiles so it always overflows the viewport - otherwise on wide
+  // screens (or when zoomed out, which enlarges the CSS-px viewport) the reel ends mid-screen and
+  // you can see the cut end of the film. Recomputed on resize/zoom.
+  const [fillers, setFillers] = useState(0);
+  useEffect(() => {
+    const compute = () => {
+      const tileW = filmStep();
+      // want (real tiles + fillers) to span the viewport plus a 2-tile buffer on the trailing side
+      setFillers(Math.max(0, Math.ceil(window.innerWidth / tileW) + 2 - tiles.length));
+    };
+    compute();
+    window.addEventListener('resize', compute);
+    return () => window.removeEventListener('resize', compute);
+  }, [tiles.length]);
+
   return (
     <div className="relative z-10 mt-8">
       <HScroll
@@ -272,9 +287,21 @@ function FilmReel({
           {tiles.map((t) => (
             <FilmFrame key={t.t} t={t} started={started} onStart={onStart} />
           ))}
+          {Array.from({ length: fillers }).map((_, i) => (
+            <FillerFrame key={`filler-${i}`} />
+          ))}
           <OrnamentalFrame side="r" />
         </motion.div>
       </HScroll>
+    </div>
+  );
+}
+
+/** a blank film tile (no clip window content) used to pad the strip out past the viewport edges. */
+function FillerFrame() {
+  return (
+    <div aria-hidden className={`relative shrink-0 ${FILM_W}`} style={{ aspectRatio: FILM_ASPECT, marginRight: -1 }}>
+      <FilmTileImg />
     </div>
   );
 }

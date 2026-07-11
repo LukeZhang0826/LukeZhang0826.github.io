@@ -11,12 +11,14 @@ import StyleControl from '../hero/StyleControl';
  * reshuffles. Each style owns its own font, palette, background, and intro animation -
  * the landing itself demonstrates the "maximum clash" thesis.
  */
-export default function HeroSection() {
+export default function HeroSection({ introNonce = 0 }: { introNonce?: number }) {
   const ref = useSectionSpy<HTMLElement>('00', 'The Index');
 
   const [idx, setIdx] = useState(() => Math.floor(Math.random() * HERO_STYLES.length));
   // bumped on every shuffle so the style component remounts and replays its intro,
-  // even when there's only one style to "randomize" to
+  // even when there's only one style to "randomize" to. introNonce does the same from
+  // the outside: App bumps it when the loading curtain lifts, so the intro plays for
+  // the visitor instead of burning behind the loader.
   const [nonce, setNonce] = useState(0);
 
   const shuffle = useCallback(() => {
@@ -38,7 +40,7 @@ export default function HeroSection() {
     <section ref={ref} className="relative h-[100svh] w-full select-none overflow-hidden bg-black">
       <Suspense fallback={null}>
         <StyleComponent
-          key={`${style.id}-${nonce}`}
+          key={`${style.id}-${nonce}-${introNonce}`}
           onEnter={onEnter}
           control={<StyleControl label={style.label} theme={style.control} onShuffle={shuffle} />}
         />

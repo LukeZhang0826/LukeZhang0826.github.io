@@ -1,4 +1,4 @@
-import{r as n,j as r}from"./motion-BxvpI9LN.js";import{S as M,D as T,C as x,a as j,V as P,N as O,u as S,b as z,d as R,e as B,f as I,g as D,O as C}from"./three-CNwzlWg8.js";import{u as G}from"./usePageVisible-C8NG6ISJ.js";const U=`
+import{r as n,j as r}from"./motion-BxvpI9LN.js";import{S as M,D as T,a as x,C as j,V as P,N as O,u as S,b as z,d as R,e as B,f as I,g as D,O as C}from"./three-MouWZUKs.js";import{u as G}from"./usePageVisible-C8NG6ISJ.js";const U=`
   varying vec2 vUv;
   void main() {
     gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
