@@ -25,7 +25,7 @@ export default {
         },
       },
       fontFamily: {
-        // per-section display faces — "chaos in the pixels": each section its own voice
+        // per-section display faces: "chaos in the pixels": each section its own voice
         grotesk: ['"Space Grotesk"', 'system-ui', 'sans-serif'], // 00 hero body copy
         graffiti: ['Fusterd', 'cursive'], // 00 hero - vaporwave name (self-hosted tag font)
         mono: ['"Space Mono"', 'ui-monospace', 'monospace'], // HUD + 06 room
