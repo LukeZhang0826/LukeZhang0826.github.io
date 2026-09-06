@@ -318,6 +318,18 @@ export default function LoadingScreen({ onStart, onGone }: { onStart: () => void
                 >
                   ● WORK IN PROGRESS
                 </text>
+                <text
+                  x={cx}
+                  y={btnCy + 58}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill="#fff"
+                  fontSize="8"
+                  letterSpacing="2"
+                  opacity={0.6}
+                >
+                  SOME MEDIA IS PLACEHOLDER + CREDITED TO OTHERS
+                </text>
               </g>
             </g>
           </mask>

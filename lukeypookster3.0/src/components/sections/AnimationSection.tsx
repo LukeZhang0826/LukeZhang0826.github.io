@@ -176,7 +176,9 @@ export default function AnimationSection() {
               Completed animated works
             </h3>
             <p className="mt-2 max-w-xl text-sm font-semibold text-ink" style={{ textShadow: HALO }}>
-              Finished loops, threaded onto the reel - drag or use the arrows to advance.
+              Placeholder reel. The clip threaded here is not my work, it is a credited
+              stand-in while my own finished loops are in progress. Drag or use the arrows
+              to advance.
             </p>
           </Reveal>
         </div>
@@ -191,7 +193,8 @@ export default function AnimationSection() {
               Selected loops
             </h3>
             <p className="mt-2 max-w-xl text-sm font-semibold text-ink" style={{ textShadow: HALO }}>
-              2.5D Japanese-street scenes and motion studies - dedouze-inspired. My actual loops are coming soon.
+              2.5D Japanese-street scenes and motion studies, dedouze-inspired. Every tile in
+              this reel is an empty placeholder. My actual loops are still in progress.
             </p>
           </Reveal>
         </div>
@@ -380,7 +383,7 @@ function FilmFrame({ t, started = false, onStart }: { t: Tile; started?: boolean
           className="absolute left-[7%] top-[20%] z-20 rounded-full border bg-black/45 px-2 py-0.5 font-mono text-[9px] font-bold uppercase text-white backdrop-blur transition-colors hover:bg-black/70"
           style={{ borderColor: '#ffffff55' }}
         >
-          by {t.credit.name} ↗
+          Placeholder, not my work · by {t.credit.name} ↗
         </a>
       )}
     </div>

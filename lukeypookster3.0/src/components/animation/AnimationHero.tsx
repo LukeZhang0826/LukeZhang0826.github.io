@@ -50,7 +50,7 @@ export default function AnimationHero() {
         rel="noopener noreferrer"
         className="pointer-events-auto absolute bottom-3 right-3 z-10 rounded-full bg-black/30 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-white/85 backdrop-blur transition-colors hover:text-white"
       >
-        loop by EmesZack ↗
+        Placeholder, not my work · loop by EmesZack ↗
       </a>
     </div>
   );
