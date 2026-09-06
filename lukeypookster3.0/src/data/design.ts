@@ -565,22 +565,23 @@ export type WorkPiece = {
   bg: string;
   bg2: string;
   fg: string;
-  /** PLACEHOLDER / invented work - replace with Luke's real pieces + a `thumb` field */
+  /** placeholder slot, not real work - replace with a real piece + a `thumb` field */
   placeholder?: boolean;
 };
 
 /**
- * PLACEHOLDER WORK - invented stand-ins so the UI/graphics gallery has something to
- * show. NONE of these are real yet; swap in Luke's actual pieces (and add image thumbs)
- * when he provides them. Previews are colored/gradient blocks for now.
+ * PLACEHOLDER SLOTS. None of these are real projects: they are numbered stand-ins so the
+ * UI/graphics gallery has something to lay out. Every card renders a "Placeholder" title
+ * and a "Coming soon" chip so nothing here reads as claimed work. Replace a slot with a
+ * real piece (and add an image thumb) as they land.
  */
 export const DESIGN_WORK: WorkPiece[] = [
   {
-    id: 'finseer-ui',
-    title: 'Finseer',
+    id: 'placeholder-1',
+    title: 'Placeholder 1',
     kind: 'ui',
-    category: 'Fintech Dashboard',
-    year: '2025',
+    category: 'Product Dashboard',
+    year: 'TBD',
     tags: ['Figma', 'Product', 'Web'],
     bg: '#0E1726',
     bg2: '#1F6FEB',
@@ -588,11 +589,11 @@ export const DESIGN_WORK: WorkPiece[] = [
     placeholder: true,
   },
   {
-    id: 'aperture-ui',
-    title: 'Aperture',
+    id: 'placeholder-2',
+    title: 'Placeholder 2',
     kind: 'ui',
-    category: 'Camera App',
-    year: '2025',
+    category: 'Mobile App',
+    year: 'TBD',
     tags: ['iOS', 'Mobile', 'Motion'],
     bg: '#111111',
     bg2: '#F2C14E',
@@ -600,35 +601,11 @@ export const DESIGN_WORK: WorkPiece[] = [
     placeholder: true,
   },
   {
-    id: 'jazzfm-rebrand',
-    title: 'JAZZ.FM Rebrand',
-    kind: 'graphic',
-    category: 'Identity',
-    year: '2024',
-    tags: ['Logo', 'Brand', 'Print'],
-    bg: '#2B1055',
-    bg2: '#E94F8A',
-    fg: '#FFE9F4',
-    placeholder: true,
-  },
-  {
-    id: 'coltrane-posters',
-    title: 'Coltrane Poster Series',
-    kind: 'graphic',
-    category: 'Poster',
-    year: '2024',
-    tags: ['Editorial', 'Type', 'Riso'],
-    bg: '#0B3D2E',
-    bg2: '#E6B325',
-    fg: '#F4F1E1',
-    placeholder: true,
-  },
-  {
-    id: 'indie-atlas-ui',
-    title: 'Indie Atlas',
+    id: 'placeholder-3',
+    title: 'Placeholder 3',
     kind: 'ui',
     category: 'Music Discovery',
-    year: '2025',
+    year: 'TBD',
     tags: ['Figma', 'Web', 'Data-viz'],
     bg: '#101010',
     bg2: '#1DB954',
@@ -636,11 +613,11 @@ export const DESIGN_WORK: WorkPiece[] = [
     placeholder: true,
   },
   {
-    id: 'modular-ds',
-    title: 'Modular',
+    id: 'placeholder-4',
+    title: 'Placeholder 4',
     kind: 'ui',
     category: 'Design System',
-    year: '2024',
+    year: 'TBD',
     tags: ['Tokens', 'Components', 'Docs'],
     bg: '#1A1A1A',
     bg2: '#7C5CFF',
@@ -648,11 +625,35 @@ export const DESIGN_WORK: WorkPiece[] = [
     placeholder: true,
   },
   {
-    id: 'acid-bloom-poster',
-    title: 'Acid Bloom',
+    id: 'placeholder-5',
+    title: 'Placeholder 5',
+    kind: 'graphic',
+    category: 'Identity',
+    year: 'TBD',
+    tags: ['Logo', 'Brand', 'Print'],
+    bg: '#2B1055',
+    bg2: '#E94F8A',
+    fg: '#FFE9F4',
+    placeholder: true,
+  },
+  {
+    id: 'placeholder-6',
+    title: 'Placeholder 6',
+    kind: 'graphic',
+    category: 'Poster',
+    year: 'TBD',
+    tags: ['Editorial', 'Type', 'Riso'],
+    bg: '#0B3D2E',
+    bg2: '#E6B325',
+    fg: '#F4F1E1',
+    placeholder: true,
+  },
+  {
+    id: 'placeholder-7',
+    title: 'Placeholder 7',
     kind: 'graphic',
     category: 'Gig Poster',
-    year: '2023',
+    year: 'TBD',
     tags: ['Acid', 'Print', 'Y2K'],
     bg: '#05140A',
     bg2: '#C6FF1A',

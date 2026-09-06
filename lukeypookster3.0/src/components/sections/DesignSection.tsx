@@ -54,6 +54,9 @@ export default function DesignSection() {
           <h3 className="px-4 font-mono text-sm uppercase tracking-widest text-ink/70 md:px-8">
             // UI &amp; Web - product / interface
           </h3>
+          <p className="mt-1 px-4 font-mono text-[11px] uppercase tracking-widest text-ink/45 md:px-8">
+            Placeholder slots. None of these are real pieces yet.
+          </p>
         </Reveal>
         <div className="mt-3">
           <WorkGallery kind="ui" label="UI / web · drag →" />
@@ -66,6 +69,9 @@ export default function DesignSection() {
           <h3 className="px-4 font-mono text-sm uppercase tracking-widest text-ink/70 md:px-8">
             // Graphics &amp; Posters - print / illustration
           </h3>
+          <p className="mt-1 px-4 font-mono text-[11px] uppercase tracking-widest text-ink/45 md:px-8">
+            Placeholder slots. None of these are real pieces yet.
+          </p>
         </Reveal>
         <div className="mt-3">
           <WorkGallery kind="graphic" label="Graphics · drag →" />
